@@ -5,21 +5,20 @@ import br.com.fiap.dao.ConnectionFactory;
 import br.com.fiap.dto.Carro;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
-public class TesteCreate {
+public class TesteRead {
     public static void main(String[] args) {
         Connection con = ConnectionFactory.abrirConexao();
 
-        Carro carro = new Carro();
-        carro.setPlaca("JKK1902");
-        carro.setCor("Verde");
-        carro.setDescricao("Ford Fiesta");
-
         CarroDAO carroDAO = new CarroDAO(con);
-        System.out.println(carroDAO.inserir(carro));
+        ArrayList<Carro> resultado = carroDAO.listarTodos();
+        if(resultado !=null){
+            for(Carro carro: resultado){
+                System.out.printf("Placa: %s \n Cor: %s \n Descrição: %s \n", carro.getPlaca(), carro.getCor(), carro.getDescricao());
 
+            }
+        }
         ConnectionFactory.fecharConexao(con);
-
-
     }
 }
